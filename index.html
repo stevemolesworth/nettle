@@ -3,31 +3,42 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Nettle</title>
+    <title>The Nettle Company</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&display=swap" rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body class="h-screen overflow-hidden">
-    <div class="flex h-full">
-      <div id="bg-col" class="w-1/2 h-full bg-cover bg-center"></div>
-      <div class="w-1/2 h-full bg-neutral-800 flex items-center justify-center">
+    <div class="flex flex-col-reverse md:flex-row h-full">
+      <div id="bg-col" class="w-full md:w-1/2 h-1/2 md:h-full bg-cover bg-center"></div>
+      <div class="w-full md:w-1/2 h-1/2 md:h-full bg-neutral-800 flex items-center justify-center">
         <span class="text-white text-6xl tracking-widest" style="font-family: 'Cormorant Garamond', serif; font-weight: 500">Nettle</span>
       </div>
     </div>
 
     <script>
-      const images = [
-        'assets/home-bg/nettle-bg-1.jpeg',
-        'assets/home-bg/nettle-bg-2.jpeg',
-        'assets/home-bg/nettle-bg-3.jpeg',
-        'assets/home-bg/nettle-bg-4.jpeg',
-        'assets/home-bg/nettle-bg-5.jpeg',
-        'assets/home-bg/nettle-bg-6.jpeg',
-        'assets/home-bg/nettle-bg-7.jpeg',
-        'assets/home-bg/nettle-bg-8.jpeg',
+      const lgImages = [
+        'assets/home-bg/nettle-bg-lg-1.jpeg',
+        'assets/home-bg/nettle-bg-lg-2.jpeg',
+        'assets/home-bg/nettle-bg-lg-3.jpeg',
+        'assets/home-bg/nettle-bg-lg-4.jpeg',
+        'assets/home-bg/nettle-bg-lg-5.jpeg',
+        'assets/home-bg/nettle-bg-lg-6.jpeg',
+        'assets/home-bg/nettle-bg-lg-7.jpeg',
+        'assets/home-bg/nettle-bg-lg-8.jpeg',
       ];
+      const smImages = [
+        'assets/home-bg/nettle-bg-sm-1.jpg',
+        'assets/home-bg/nettle-bg-sm-2.jpg',
+        'assets/home-bg/nettle-bg-sm-3.jpg',
+        'assets/home-bg/nettle-bg-sm-4.jpg',
+        'assets/home-bg/nettle-bg-sm-5.jpg',
+        'assets/home-bg/nettle-bg-sm-6.jpg',
+        'assets/home-bg/nettle-bg-sm-7.jpg',
+        'assets/home-bg/nettle-bg-sm-8.jpg',
+      ];
+      const images = window.matchMedia('(min-width: 768px)').matches ? lgImages : smImages;
       const random = images[Math.floor(Math.random() * images.length)];
       document.getElementById('bg-col').style.backgroundImage = `url('${random}')`;
     </script>
