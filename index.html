@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>The Nettle Company</title>
+    <link rel="icon" type="image/svg+xml" href="assets/marque.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&display=swap" rel="stylesheet" />
@@ -11,12 +12,26 @@
   </head>
   <body class="h-screen overflow-hidden">
     <div class="flex flex-col-reverse md:flex-row h-full">
-      <div id="bg-col" class="w-full md:w-1/2 h-1/2 md:h-full bg-cover bg-center"></div>
+      <div id="bg-col" class="relative w-full md:w-1/2 h-1/2 md:h-full overflow-hidden">
+        <div id="slides"></div>
+        <img src="assets/marque.svg" class="absolute inset-0 m-auto w-auto h-auto max-w-[60%] max-h-[60%] z-10" alt="Marque" />
+      </div>
       <div class="w-full md:w-1/2 h-1/2 md:h-full bg-neutral-800 flex items-center justify-center">
         <span class="text-white text-6xl tracking-widest" style="font-family: 'Cormorant Garamond', serif; font-weight: 500">Nettle</span>
       </div>
     </div>
 
+    <style>
+      .slide {
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center;
+        opacity: 0;
+        transition: opacity 1s ease-in-out;
+      }
+      .slide.active { opacity: 1; }
+    </style>
     <script>
       const lgImages = [
         'assets/home-bg/nettle-bg-lg-1.jpeg',
@@ -38,9 +53,27 @@
         'assets/home-bg/nettle-bg-sm-7.jpg',
         'assets/home-bg/nettle-bg-sm-8.jpg',
       ];
+
       const images = window.matchMedia('(min-width: 768px)').matches ? lgImages : smImages;
-      const random = images[Math.floor(Math.random() * images.length)];
-      document.getElementById('bg-col').style.backgroundImage = `url('${random}')`;
+      const container = document.getElementById('slides');
+
+      // Build slide divs
+      images.forEach(src => {
+        const div = document.createElement('div');
+        div.className = 'slide';
+        div.style.backgroundImage = `url('${src}')`;
+        container.appendChild(div);
+      });
+
+      const slides = container.querySelectorAll('.slide');
+      let current = Math.floor(Math.random() * slides.length);
+      slides[current].classList.add('active');
+
+      setInterval(() => {
+        slides[current].classList.remove('active');
+        current = (current + 1) % slides.length;
+        slides[current].classList.add('active');
+      }, 3000); // 1s fade + 2s pause
     </script>
   </body>
 </html>
