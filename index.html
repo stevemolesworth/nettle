@@ -14,7 +14,7 @@
     <div class="flex flex-col-reverse md:flex-row h-full">
       <div id="bg-col" class="relative w-full md:w-1/2 h-1/2 md:h-full overflow-hidden">
         <div class="bg-neutral-900" id="slides"></div>
-        <img src="assets/marque.svg" class="absolute inset-0 m-auto w-auto h-auto max-w-[60%] max-h-[60%] z-10 opacity-95" alt="Marque" />
+        <img src="assets/marque.svg" class="absolute inset-0 m-auto w-auto h-auto max-w-[200px] max-h-[60%] z-10 opacity-95" alt="Marque" />
       </div>
       <div class="w-full md:w-1/2 h-1/2 md:h-full bg-neutral-800 flex items-center justify-center">
         <span class="text-white text-6xl tracking-widest" style="font-family: 'Cormorant Garamond', serif; font-weight: 500">Nettle</span>
@@ -58,24 +58,49 @@
 
       const images = window.matchMedia('(min-width: 768px)').matches ? lgImages : smImages;
       const container = document.getElementById('slides');
+      let current = Math.floor(Math.random() * images.length);
 
-      // Build slide divs
-      images.forEach((src) => {
+      // Build slide divs, but only set backgroundImage on the first one immediately
+      images.forEach((src, i) => {
         const div = document.createElement('div');
         div.className = 'slide';
-        div.style.backgroundImage = `url('${src}')`;
+        if (i === current) {
+          div.style.backgroundImage = `url('${src}')`;
+          div.classList.add('active');
+        }
         container.appendChild(div);
       });
 
       const slides = container.querySelectorAll('.slide');
-      let current = Math.floor(Math.random() * slides.length);
-      slides[current].classList.add('active');
 
-      setInterval(() => {
-        slides[current].classList.remove('active');
-        current = (current + 1) % slides.length;
-        slides[current].classList.add('active');
-      }, 3000); // 1s fade + 2s pause
+      // Preload remaining images, then start the slideshow
+      let loaded = 0;
+      const others = images.filter((_, i) => i !== current);
+
+      function startSlideshow() {
+        // Fill in background images for remaining slides
+        slides.forEach((slide, i) => {
+          if (i !== current) slide.style.backgroundImage = `url('${images[i]}')`;
+        });
+        setInterval(() => {
+          slides[current].classList.remove('active');
+          current = (current + 1) % slides.length;
+          slides[current].classList.add('active');
+        }, 3000);
+      }
+
+      if (others.length === 0) {
+        startSlideshow();
+      } else {
+        others.forEach(src => {
+          const img = new Image();
+          img.onload = img.onerror = () => {
+            loaded++;
+            if (loaded === others.length) startSlideshow();
+          };
+          img.src = src;
+        });
+      }
     </script>
   </body>
 </html>
