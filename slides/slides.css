@@ -1,0 +1,352 @@
+/* Nettle slide deck styles */
+/* Matches the dark, typographic aesthetic of index.html */
+
+:root {
+  --nettle-dark: #262626; /* neutral-800 */
+  --nettle-darker: #171717; /* neutral-900 */
+  --nettle-mid: #404040; /* neutral-700 */
+  --nettle-muted: #a3a3a3; /* neutral-400 */
+  --nettle-light: #f5f5f5; /* neutral-100 */
+}
+
+html,
+body {
+  background-color: var(--nettle-dark);
+  color: var(--nettle-light);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 400;
+  font-size: 1.1em;
+  scroll-behavior: smooth;
+}
+
+body {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+body.fonts-ready {
+  opacity: 1;
+}
+
+/* ── Typography ───────────────────────────────── */
+
+h1,
+h2,
+h3,
+h4 {
+  color: var(--nettle-light);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 300;
+  letter-spacing: 0.04em;
+}
+
+h1 {
+  font-size: 2.6em;
+  margin-bottom: 0.4em;
+  line-height: 1.15;
+}
+
+h2 {
+  font-size: 1.6em;
+  margin-bottom: 0.4em;
+}
+
+h3 {
+  font-size: 1.25em;
+  margin-bottom: 0.4em;
+  font-weight: 400;
+}
+
+p,
+ul,
+ol {
+  margin-bottom: 0.8em;
+  line-height: 1.65;
+  color: var(--nettle-light);
+}
+
+a {
+  color: var(--nettle-light);
+  opacity: 0.75;
+  text-decoration: none;
+}
+
+a:hover {
+  opacity: 1;
+}
+
+small {
+  color: var(--nettle-muted);
+  font-size: 0.75em;
+  letter-spacing: 0.06em;
+}
+
+/* ── Panels ───────────────────────────────────── */
+
+.panel {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: var(--nettle-dark);
+  border-bottom: 1px solid var(--nettle-mid);
+}
+
+.panel:last-child {
+  border-bottom: none;
+}
+
+#panels .container {
+  padding-top: 3em;
+  padding-bottom: 3em;
+}
+
+/* Cover panel */
+.panel.cover,
+.panel:first-child {
+  background-color: var(--nettle-darker);
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.panel.cover::before,
+.panel:first-child::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.72) 0%, rgba(0, 0, 0, 0.48) 100%);
+  z-index: 1;
+}
+
+.panel.cover .container,
+.panel:first-child .container {
+  position: relative;
+  z-index: 2;
+}
+
+/* Break panels */
+.panel-break {
+  background-color: var(--nettle-mid);
+  min-height: 30vh;
+}
+
+/* ── Panel index (TOC) ────────────────────────── */
+
+#panel-index {
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+
+#panel-index ol,
+#panel-index ul {
+  padding-left: 0;
+  list-style: none;
+  margin: 0;
+}
+
+#panel-index li {
+  margin-bottom: 0.3em;
+}
+
+#panel-index a {
+  color: var(--nettle-light);
+  opacity: 0.7;
+  font-size: 0.85em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+#panel-index a:hover {
+  opacity: 1;
+}
+
+/* ── Panel count ──────────────────────────────── */
+
+.panel-count {
+  display: none;
+  color: var(--nettle-muted);
+  font-size: 0.7em;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 1.5em;
+}
+
+@media (min-width: 576px) {
+  .panel-count {
+    display: block;
+  }
+}
+
+.panel:first-child .panel-count {
+  display: none !important;
+}
+
+/* ── Nav buttons ──────────────────────────────── */
+
+#panel-nav {
+  position: fixed;
+  bottom: 2em;
+  right: 2em;
+  z-index: 100;
+  display: none;
+  gap: 0.5em;
+  flex-direction: row;
+}
+
+@media (min-width: 576px) {
+  #panel-nav {
+    display: flex;
+  }
+}
+
+.btn {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 0.85em;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.55em 1.2em;
+  border-radius: 2px;
+  border: 1px solid var(--nettle-muted);
+  background: transparent;
+  color: var(--nettle-light);
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    border-color 0.2s;
+}
+
+.btn:hover:not(:disabled) {
+  background: var(--nettle-mid);
+  border-color: var(--nettle-light);
+}
+
+.btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+/* ── Vision tile field ────────────────────────── */
+
+.vision-tile-field {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: 25rem;
+  overflow: hidden;
+  pointer-events: auto;
+}
+
+.vision-tile-field-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.vision-tile {
+  position: absolute;
+  top: var(--tile-top);
+  left: var(--tile-left);
+  width: var(--tile-width);
+  height: var(--tile-height);
+  transform: rotate(var(--tile-rotate));
+  border-radius: 2px;
+  overflow: hidden;
+  box-shadow: 0 1.2rem 2.4rem rgba(0, 0, 0, 0.4);
+  border: 8px solid var(--nettle-mid);
+  isolation: isolate;
+  cursor: pointer;
+}
+
+.vision-tile::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.06) 0%, rgba(0, 0, 0, 0.55) 100%);
+  z-index: 1;
+}
+
+.vision-tile-photo {
+  position: absolute;
+  inset: 0;
+  background-image: var(--tile-photo);
+  background-size: cover;
+  background-position: center;
+  filter: grayscale(0.9) contrast(1.05);
+}
+
+.vision-tile-question {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  margin: 0;
+  padding: 0.6rem 0.75rem;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: var(--nettle-light);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 0.72rem;
+  line-height: 1.3;
+  font-weight: 400;
+  font-style: italic;
+  text-wrap: balance;
+}
+
+/* ── Bootstrap grid overrides ─────────────────── */
+
+.container {
+  color: var(--nettle-light);
+}
+
+/* ── Logo ─────────────────────────────────────── */
+
+.marque {
+  width: 100%;
+  max-width: 180px;
+  margin-bottom: 2em;
+  opacity: 0.9;
+}
+
+/* ── Utility ──────────────────────────────────── */
+
+.hide {
+  display: none;
+}
+
+/* ── Responsive ───────────────────────────────── */
+
+@media (min-width: 992px) {
+  body {
+    font-size: 1.25em;
+  }
+}
+
+@media (max-width: 991px) {
+  .vision-tile-field {
+    height: 20rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .vision-tile-field {
+    display: none;
+  }
+
+  .vision-tile-question {
+    left: 0.6rem;
+    right: 0.6rem;
+    bottom: 0.6rem;
+    padding: 0.5rem 0.6rem;
+    font-size: 0.64rem;
+  }
+}

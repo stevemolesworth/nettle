@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Slides — The Nettle Company</title>
+    <link rel="icon" type="image/svg+xml" href="../assets/marque.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=block" rel="stylesheet" />
+    <!-- Bootstrap grid -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="./slides.css" />
+  </head>
+  <body>
+    <main>
+      <div id="panel-nav">
+        <button class="btn btn-primary btn-lg" disabled id="btn-start">Start</button>
+        <button class="btn btn-primary btn-lg" disabled id="btn-previous">Previous</button>
+        <button class="btn btn-primary btn-lg" disabled id="btn-next">Next</button>
+      </div>
+      <div id="panels">
+        <!-- panels start -->
+
+        <!-- Cover -->
+        <section class="panel cover">
+          <div class="container">
+            <a href="../index.html"><img class="marque" src="../assets/marque.svg" alt="Nettle marque" /></a>
+
+            <div class="row">
+              <div class="col col-9">
+                <h1>Slide deck title</h1>
+                <h2>Sub heading</h2>
+              </div>
+            </div>
+            <nav id="panel-index"></nav>
+          </div>
+        </section>
+
+        <!-- Slide title -->
+        <!-- Add 'panel-break' to section to create a dividing slide
+        Add supporting visual assets, if required, to col 2 -->
+        <section class="panel" id="design-approach-detail">
+          <div class="container">
+            <div class="row">
+              <div class="col col-8">
+                <h1>Slide title</h1>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+                  veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                </p>
+                <ul>
+                  <li>Lorem ipsum dolor sit amet</li>
+                  <li>Lorem ipsum dolor sit amet</li>
+                  <li>Lorem ipsum dolor sit amet</li>
+                </ul>
+              </div>
+              <div class="col offset-col-2 col-4"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Slide template -->
+        <!-- Slide title -->
+        <!-- Add 'panel-break' to section to create a dividing slide
+        Add supporting visual assets, if required, to col 2 -->
+        <!-- <section class="panel" id="design-approach-detail">
+          <div class="container">
+            <div class="row">
+              <div class="col col-8">
+                <h1>Slide title</h1>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+                  veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                </p>
+                <ul>
+                  <li>Lorem ipsum dolor sit amet</li>
+                  <li>Lorem ipsum dolor sit amet</li>
+                  <li>Lorem ipsum dolor sit amet</li>
+                </ul>
+              </div>
+              <div class="col offset-col-2 col-4"></div>
+            </div>
+          </div>
+        </section> -->
+
+        <!-- panels end -->
+      </div>
+    </main>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+    <script src="./slides.js"></script>
+  </body>
+</html>
