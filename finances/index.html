@@ -233,6 +233,19 @@
         font-style: italic;
       }
 
+      /* ── Field group subheading ── */
+
+      .field-group {
+        font-size: 0.65rem;
+        font-weight: 400;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin: 1.2rem 0 0.6rem;
+      }
+
+      .field-group:first-child { margin-top: 0; }
+
       /* ── Divider line in results ── */
 
       .results-divider {
@@ -257,6 +270,7 @@
       <section>
         <h2>Materials — per unit</h2>
 
+        <p class="field-group">Strap</p>
         <div class="field">
           <label>Leather</label>
           <div class="input-wrap"><span>£</span><input type="number" id="cost-leather" value="20" min="0" step="1" /></div>
@@ -269,18 +283,22 @@
           <label>Brass fittings</label>
           <div class="input-wrap"><span>£</span><input type="number" id="cost-brass" value="10" min="0" step="1" /></div>
         </div>
-        <div class="field">
-          <label>Lining material</label>
-          <div class="input-wrap"><span>£</span><input type="number" id="cost-lining" value="5" min="0" step="1" /></div>
-        </div>
+
+        <p class="field-group">Box</p>
         <div class="field">
           <label>Box wood</label>
           <div class="input-wrap"><span>£</span><input type="number" id="cost-boxwood" value="20" min="0" step="1" /></div>
         </div>
         <div class="field">
-          <label>Lining padding</label>
+          <label>Lining material</label>
+          <div class="input-wrap"><span>£</span><input type="number" id="cost-lining" value="5" min="0" step="1" /></div>
+        </div>
+        <div class="field">
+          <label>Lining padding (wool)</label>
           <div class="input-wrap"><span>£</span><input type="number" id="cost-padding" value="2" min="0" step="1" /></div>
         </div>
+
+        <p class="field-group">Other</p>
         <div class="field">
           <label>Miscellaneous</label>
           <div class="input-wrap"><span>£</span><input type="number" id="cost-misc" value="4" min="0" step="1" /></div>
