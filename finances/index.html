@@ -54,6 +54,31 @@
         font-weight: 300;
         letter-spacing: 0.08em;
         color: var(--light);
+        flex: 1;
+      }
+
+      #btn-reset {
+        display: none;
+        font-family: 'Cormorant Garamond', Georgia, serif;
+        font-size: 0.78rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        padding: 0.45em 1.1em;
+        border-radius: 2px;
+        border: 1px solid var(--muted);
+        background: transparent;
+        color: var(--muted);
+        cursor: pointer;
+        transition: border-color 0.15s, color 0.15s;
+      }
+
+      #btn-reset:hover {
+        border-color: var(--light);
+        color: var(--light);
+      }
+
+      #btn-reset.visible {
+        display: block;
       }
 
       main {
@@ -201,6 +226,7 @@
     <header>
       <a href="../index.html"><img src="../assets/marque.svg" alt="Nettle marque" /></a>
       <h1>Finances</h1>
+      <button id="btn-reset">Reset</button>
     </header>
 
     <main>
@@ -310,6 +336,21 @@
           <span class="label">Net margin</span>
           <span class="value" id="out-net-margin">—</span>
         </div>
+
+        <hr class="results-divider" />
+
+        <div class="stat">
+          <span class="label">Annual turnover</span>
+          <span class="value" id="out-annual-turnover">—</span>
+        </div>
+        <div class="stat">
+          <span class="label">Annual profit</span>
+          <span class="value" id="out-annual-profit">—</span>
+        </div>
+        <div class="stat">
+          <span class="label">Annual units</span>
+          <span class="value" id="out-annual-units">—</span>
+        </div>
       </div>
 
     </main>
@@ -361,10 +402,37 @@
         set('out-turnover',  fmt(turnover));
         set('out-profit',    fmt(profit),  profit >= 0 ? 'positive' : 'negative');
         set('out-net-margin', pct(netMargin), netMargin >= 0 ? 'positive' : 'negative');
+        set('out-annual-turnover', fmt(turnover * 12));
+        set('out-annual-profit',   fmt(profit * 12), profit >= 0 ? 'positive' : 'negative');
+        document.getElementById('out-annual-units').textContent = (units * 12).toLocaleString('en-GB');
       }
 
-      document.querySelectorAll('input, select').forEach(el => el.addEventListener('input', update));
+      // Store defaults from HTML
+      const defaults = {};
+      document.querySelectorAll('input, select').forEach(el => {
+        defaults[el.id] = el.value;
+        el.addEventListener('input', () => { update(); checkDirty(); });
+      });
+
+      function checkDirty() {
+        const dirty = Object.keys(defaults).some(id => {
+          const el = document.getElementById(id);
+          return el && el.value !== defaults[id];
+        });
+        document.getElementById('btn-reset').classList.toggle('visible', dirty);
+      }
+
+      document.getElementById('btn-reset').addEventListener('click', () => {
+        Object.keys(defaults).forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.value = defaults[id];
+        });
+        update();
+        checkDirty();
+      });
+
       update();
+      checkDirty();
 
       document.fonts.ready.then(() => document.body.classList.add('fonts-ready'));
     </script>
