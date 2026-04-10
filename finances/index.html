@@ -81,6 +81,27 @@
         display: block;
       }
 
+      #btn-download {
+        font-family: 'Cormorant Garamond', Georgia, serif;
+        font-size: 0.78rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        padding: 0.45em 1.1em;
+        border-radius: 2px;
+        border: 1px solid var(--muted);
+        background: transparent;
+        color: var(--muted);
+        cursor: pointer;
+        transition: border-color 0.15s, color 0.15s;
+        text-decoration: none;
+        display: inline-block;
+      }
+
+      #btn-download:hover {
+        border-color: var(--light);
+        color: var(--light);
+      }
+
       main {
         max-width: 960px;
         margin: 0 auto;
@@ -227,6 +248,7 @@
       <a href="../index.html"><img src="../assets/marque.svg" alt="Nettle marque" /></a>
       <h1>Finances</h1>
       <button id="btn-reset">Reset</button>
+      <a id="btn-download" download="nettle-finances.csv">Export CSV</a>
     </header>
 
     <main>
@@ -405,6 +427,42 @@
         set('out-annual-turnover', fmt(turnover * 12));
         set('out-annual-profit',   fmt(profit * 12), profit >= 0 ? 'positive' : 'negative');
         document.getElementById('out-annual-units').textContent = (units * 12).toLocaleString('en-GB');
+
+        // Update CSV download link
+        const rows = [
+          ['Nettle Co. — Finances Export'],
+          [''],
+          ['MATERIALS (per unit)', ''],
+          ['Leather',          val('cost-leather')],
+          ['Handle (beech)',   val('cost-handle')],
+          ['Brass fittings',   val('cost-brass')],
+          ['Lining material',  val('cost-lining')],
+          ['Box wood',         val('cost-boxwood')],
+          ['Lining padding',   val('cost-padding')],
+          ['Miscellaneous',    val('cost-misc')],
+          ['P&P (per unit)',   val('mkt-photography')],
+          [''],
+          ['PRICING & MARKETING', ''],
+          ['Target price',              price],
+          ['Units per month',           units],
+          ['Media spend (monthly)',     val('mkt-ads')],
+          ['Other (monthly)',           val('mkt-other')],
+          [''],
+          ['RESULTS', ''],
+          ['Cost per unit',     Math.round(cogs)],
+          ['Gross margin (£)',  Math.round(margin)],
+          ['Gross margin (%)',  Math.round(marginPct) + '%'],
+          ['Monthly marketing', Math.round(mkt)],
+          ['Monthly turnover',  Math.round(turnover)],
+          ['Monthly profit',    Math.round(profit)],
+          ['Net margin (%)',    Math.round(netMargin) + '%'],
+          ['Annual turnover',   Math.round(turnover * 12)],
+          ['Annual profit',     Math.round(profit * 12)],
+          ['Annual units',      units * 12],
+        ];
+        const csv = rows.map(r => r.map(c => `"${c}"`).join(',')).join('\n');
+        const blob = new Blob([csv], { type: 'text/csv' });
+        document.getElementById('btn-download').href = URL.createObjectURL(blob);
       }
 
       // Store defaults from HTML
