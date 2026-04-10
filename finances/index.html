@@ -280,7 +280,6 @@
       <a href="../index.html"><img src="../assets/marque.svg" alt="Nettle marque" /></a>
       <h1>Finances</h1>
       <button id="btn-reset">Reset</button>
-      <button id="btn-copy">Copy summary</button>
       <a id="btn-download" download="nettle-finances.csv">Export CSV</a>
     </header>
 
@@ -367,6 +366,9 @@
       </section>
 
       <!-- Results -->
+      <div style="grid-column: 1 / -1; display: flex; justify-content: flex-end; gap: 0.75rem; margin-bottom: -1.5rem;">
+        <button id="btn-copy">Copy summary</button>
+      </div>
       <div class="results">
         <div class="stat">
           <span class="label">Cost per unit</span>
