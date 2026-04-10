@@ -246,6 +246,28 @@
 
       .field-group:first-child { margin-top: 0; }
 
+      /* ── Subtotal row ── */
+
+      .field.subtotal {
+        margin-top: 1.2rem;
+        padding-top: 0.75rem;
+        border-top: 1px solid var(--mid);
+      }
+
+      .field.subtotal label {
+        color: var(--muted);
+        font-size: 0.85rem;
+        letter-spacing: 0.06em;
+      }
+
+      .field.subtotal span:last-child {
+        color: var(--light);
+        font-size: 1rem;
+        min-width: 3em;
+        text-align: right;
+        display: inline-block;
+      }
+
       /* ── Copy summary button ── */
 
       #btn-copy {
@@ -322,6 +344,11 @@
           <label>Miscellaneous</label>
           <div class="input-wrap"><span>£</span><input type="number" id="cost-misc" value="3" min="0" step="1" /></div>
         </div>
+
+        <div class="field subtotal">
+          <label>Materials subtotal</label>
+          <div class="input-wrap"><span>£</span><span id="subtotal-materials">—</span></div>
+        </div>
       </section>
 
       <!-- Pricing & marketing -->
@@ -362,6 +389,11 @@
             <label>Other</label>
             <div class="input-wrap"><span>£</span><input type="number" id="mkt-other" value="5" min="0" step="5" /></div>
           </div>
+        </div>
+
+        <div class="field subtotal">
+          <label>Cost per sale subtotal</label>
+          <div class="input-wrap"><span>£</span><span id="subtotal-cps">—</span></div>
         </div>
       </section>
 
@@ -444,6 +476,10 @@
         const price   = val('price');
         const units   = val('units');
         const mkt     = val('mkt-ads') + val('mkt-other');
+
+        const materialsOnly = cogs - val('mkt-photography');
+        document.getElementById('subtotal-materials').textContent = Math.round(materialsOnly).toLocaleString('en-GB');
+        document.getElementById('subtotal-cps').textContent = Math.round(val('mkt-photography') + mkt).toLocaleString('en-GB');
 
         const margin     = price - cogs;
         const marginPct  = price > 0 ? (margin / price) * 100 : 0;
