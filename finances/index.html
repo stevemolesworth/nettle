@@ -373,7 +373,7 @@
           <span class="value" id="out-profit">—</span>
         </div>
         <div class="stat">
-          <span class="label">Net margin</span>
+          <span class="label">Monthly units</span>
           <span class="value" id="out-net-margin">—</span>
         </div>
 
@@ -441,7 +441,8 @@
         set('out-mkt',       fmt(mkt));
         set('out-turnover',  fmt(turnover));
         set('out-profit',    fmt(profit),  profit >= 0 ? 'positive' : 'negative');
-        set('out-net-margin', pct(netMargin), netMargin >= 0 ? 'positive' : 'negative');
+        document.getElementById('out-net-margin').textContent = units.toLocaleString('en-GB');
+        document.getElementById('out-net-margin').className = 'value';
         set('out-annual-turnover', fmt(turnover * 12));
         set('out-annual-profit',   fmt(profit * 12), profit >= 0 ? 'positive' : 'negative');
         document.getElementById('out-annual-units').textContent = (units * 12).toLocaleString('en-GB');
