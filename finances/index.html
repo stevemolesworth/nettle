@@ -358,7 +358,7 @@
           <span class="sub" id="out-margin-pct"></span>
         </div>
         <div class="stat">
-          <span class="label">Monthly marketing</span>
+          <span class="label">ASP</span>
           <span class="value" id="out-mkt">—</span>
         </div>
 
@@ -438,7 +438,7 @@
         set('out-cogs',      fmt(cogs));
         set('out-margin',    fmt(margin),  margin >= 0 ? 'positive' : 'negative');
         document.getElementById('out-margin-pct').textContent = pct(marginPct) + ' of price';
-        set('out-mkt',       fmt(mkt));
+        set('out-mkt',       fmt(price));
         set('out-turnover',  fmt(turnover));
         set('out-profit',    fmt(profit),  profit >= 0 ? 'positive' : 'negative');
         document.getElementById('out-net-margin').textContent = units.toLocaleString('en-GB');
