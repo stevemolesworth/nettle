@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Finances — The Nettle Company</title>
+    <link rel="icon" type="image/svg+xml" href="../assets/marque.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=block" rel="stylesheet" />
+    <style>
+      :root {
+        --dark:   #262626;
+        --darker: #171717;
+        --mid:    #404040;
+        --muted:  #a3a3a3;
+        --light:  #f5f5f5;
+        --accent: #d4a853;
+      }
+
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+      html, body {
+        background: var(--darker);
+        color: var(--light);
+        font-family: 'Cormorant Garamond', Georgia, serif;
+        font-size: 1.1rem;
+        min-height: 100vh;
+      }
+
+      body {
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+      body.fonts-ready { opacity: 1; }
+
+      /* ── Layout ── */
+
+      header {
+        padding: 2.5rem 2rem 1.5rem;
+        border-bottom: 1px solid var(--mid);
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+      }
+
+      header a img {
+        width: 48px;
+        opacity: 0.85;
+      }
+
+      header h1 {
+        font-size: 1.8rem;
+        font-weight: 300;
+        letter-spacing: 0.08em;
+        color: var(--light);
+      }
+
+      main {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 3rem 2rem 5rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem 4rem;
+      }
+
+      @media (max-width: 700px) {
+        main { grid-template-columns: 1fr; gap: 2.5rem; }
+      }
+
+      section h2 {
+        font-size: 0.72rem;
+        font-weight: 400;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 1.2rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid var(--mid);
+      }
+
+      /* ── Form rows ── */
+
+      .field {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .field label {
+        font-size: 1rem;
+        font-weight: 300;
+        color: var(--light);
+        white-space: nowrap;
+      }
+
+      .field .input-wrap {
+        display: flex;
+        align-items: baseline;
+        gap: 0.3rem;
+      }
+
+      .field .input-wrap span {
+        font-size: 0.9rem;
+        color: var(--muted);
+      }
+
+      input[type="number"],
+      select {
+        background: var(--dark);
+        border: 1px solid var(--mid);
+        color: var(--light);
+        font-family: 'Cormorant Garamond', Georgia, serif;
+        font-size: 1rem;
+        font-weight: 300;
+        padding: 0.3em 0.6em;
+        width: 90px;
+        text-align: right;
+        border-radius: 2px;
+        appearance: none;
+        -webkit-appearance: none;
+        transition: border-color 0.15s;
+      }
+
+      select {
+        width: auto;
+        text-align: left;
+        padding-right: 1.5em;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23a3a3a3'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 0.5em center;
+        cursor: pointer;
+      }
+
+      input[type="number"]:focus,
+      select:focus {
+        outline: none;
+        border-color: var(--light);
+      }
+
+      input[type="number"]::-webkit-inner-spin-button,
+      input[type="number"]::-webkit-outer-spin-button { opacity: 0.4; }
+
+      /* ── Results panel ── */
+
+      .results {
+        grid-column: 1 / -1;
+        background: var(--dark);
+        border: 1px solid var(--mid);
+        border-radius: 2px;
+        padding: 2rem 2.5rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 1.5rem 2rem;
+      }
+
+      .stat {
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+      }
+
+      .stat .label {
+        font-size: 0.68rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      .stat .value {
+        font-size: 2.4rem;
+        font-weight: 300;
+        letter-spacing: 0.02em;
+        color: var(--light);
+        line-height: 1;
+      }
+
+      .stat .value.positive { color: #7ec99a; }
+      .stat .value.negative { color: #d97c7c; }
+
+      .stat .sub {
+        font-size: 0.8rem;
+        color: var(--muted);
+        font-style: italic;
+      }
+
+      /* ── Divider line in results ── */
+
+      .results-divider {
+        grid-column: 1 / -1;
+        border: none;
+        border-top: 1px solid var(--mid);
+        margin: 0.25rem 0;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <a href="../index.html"><img src="../assets/marque.svg" alt="Nettle marque" /></a>
+      <h1>Finances</h1>
+    </header>
+
+    <main>
+
+      <!-- Materials costs -->
+      <section>
+        <h2>Materials — per unit</h2>
+
+        <div class="field">
+          <label>Leather</label>
+          <div class="input-wrap"><span>£</span><input type="number" id="cost-leather" value="45" min="0" step="1" /></div>
+        </div>
+        <div class="field">
+          <label>Handle (beech)</label>
+          <div class="input-wrap"><span>£</span><input type="number" id="cost-handle" value="18" min="0" step="1" /></div>
+        </div>
+        <div class="field">
+          <label>Brass fittings</label>
+          <div class="input-wrap"><span>£</span><input type="number" id="cost-brass" value="12" min="0" step="1" /></div>
+        </div>
+        <div class="field">
+          <label>Lining material</label>
+          <div class="input-wrap"><span>£</span><input type="number" id="cost-lining" value="22" min="0" step="1" /></div>
+        </div>
+        <div class="field">
+          <label>Box wood</label>
+          <div class="input-wrap"><span>£</span><input type="number" id="cost-boxwood" value="35" min="0" step="1" /></div>
+        </div>
+        <div class="field">
+          <label>Lining padding</label>
+          <div class="input-wrap"><span>£</span><input type="number" id="cost-padding" value="8" min="0" step="1" /></div>
+        </div>
+        <div class="field">
+          <label>Miscellaneous</label>
+          <div class="input-wrap"><span>£</span><input type="number" id="cost-misc" value="15" min="0" step="1" /></div>
+        </div>
+      </section>
+
+      <!-- Pricing & marketing -->
+      <section>
+        <h2>Pricing &amp; marketing</h2>
+
+        <div class="field">
+          <label>Target price</label>
+          <div class="input-wrap"><span>£</span><input type="number" id="price" value="750" min="0" step="50" /></div>
+        </div>
+
+        <div class="field" style="margin-top: 1.5rem;">
+          <label>Units per month</label>
+          <div class="input-wrap">
+            <select id="units">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="5">5</option>
+              <option value="10">10</option>
+              <option value="20">20</option>
+              <option value="50">50</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="margin-top: 1.5rem;">
+          <h2 style="margin-bottom: 1.2rem;">Marketing spend — per month</h2>
+          <div class="field">
+            <label>Photography</label>
+            <div class="input-wrap"><span>£</span><input type="number" id="mkt-photography" value="0" min="0" step="10" /></div>
+          </div>
+          <div class="field">
+            <label>Packaging design</label>
+            <div class="input-wrap"><span>£</span><input type="number" id="mkt-packaging" value="0" min="0" step="10" /></div>
+          </div>
+          <div class="field">
+            <label>Social / ads</label>
+            <div class="input-wrap"><span>£</span><input type="number" id="mkt-ads" value="0" min="0" step="10" /></div>
+          </div>
+          <div class="field">
+            <label>Other</label>
+            <div class="input-wrap"><span>£</span><input type="number" id="mkt-other" value="0" min="0" step="10" /></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Results -->
+      <div class="results">
+        <div class="stat">
+          <span class="label">Cost per unit</span>
+          <span class="value" id="out-cogs">—</span>
+        </div>
+        <div class="stat">
+          <span class="label">Gross margin</span>
+          <span class="value" id="out-margin">—</span>
+          <span class="sub" id="out-margin-pct"></span>
+        </div>
+        <div class="stat">
+          <span class="label">Monthly marketing</span>
+          <span class="value" id="out-mkt">—</span>
+        </div>
+
+        <hr class="results-divider" />
+
+        <div class="stat">
+          <span class="label">Monthly turnover</span>
+          <span class="value" id="out-turnover">—</span>
+        </div>
+        <div class="stat">
+          <span class="label">Monthly profit</span>
+          <span class="value" id="out-profit">—</span>
+        </div>
+        <div class="stat">
+          <span class="label">Net margin</span>
+          <span class="value" id="out-net-margin">—</span>
+        </div>
+      </div>
+
+    </main>
+
+    <script>
+      function val(id) {
+        return parseFloat(document.getElementById(id).value) || 0;
+      }
+
+      function fmt(n) {
+        return '£' + Math.round(n).toLocaleString('en-GB');
+      }
+
+      function pct(n) {
+        return Math.round(n) + '%';
+      }
+
+      function update() {
+        const cogs =
+          val('cost-leather') +
+          val('cost-handle') +
+          val('cost-brass') +
+          val('cost-lining') +
+          val('cost-boxwood') +
+          val('cost-padding') +
+          val('cost-misc');
+
+        const price   = val('price');
+        const units   = val('units');
+        const mkt     = val('mkt-photography') + val('mkt-packaging') + val('mkt-ads') + val('mkt-other');
+
+        const margin     = price - cogs;
+        const marginPct  = price > 0 ? (margin / price) * 100 : 0;
+        const turnover   = price * units;
+        const profit     = (margin * units) - mkt;
+        const netMargin  = turnover > 0 ? (profit / turnover) * 100 : 0;
+
+        const set = (id, text, cls) => {
+          const el = document.getElementById(id);
+          el.textContent = text;
+          el.className = 'value' + (cls ? ' ' + cls : '');
+        };
+
+        set('out-cogs',      fmt(cogs));
+        set('out-margin',    fmt(margin),  margin >= 0 ? 'positive' : 'negative');
+        document.getElementById('out-margin-pct').textContent = pct(marginPct) + ' of price';
+        set('out-mkt',       fmt(mkt));
+        set('out-turnover',  fmt(turnover));
+        set('out-profit',    fmt(profit),  profit >= 0 ? 'positive' : 'negative');
+        set('out-net-margin', pct(netMargin), netMargin >= 0 ? 'positive' : 'negative');
+      }
+
+      document.querySelectorAll('input, select').forEach(el => el.addEventListener('input', update));
+      update();
+
+      document.fonts.ready.then(() => document.body.classList.add('fonts-ready'));
+    </script>
+  </body>
+</html>
