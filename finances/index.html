@@ -481,10 +481,11 @@
         document.getElementById('subtotal-materials').textContent = Math.round(materialsOnly).toLocaleString('en-GB');
         document.getElementById('subtotal-cps').textContent = Math.round(val('mkt-photography') + mkt).toLocaleString('en-GB');
 
-        const margin     = price - cogs;
+        const costPerUnit = materialsOnly + val('mkt-photography') + mkt;
+        const margin     = price - costPerUnit;
         const marginPct  = price > 0 ? (margin / price) * 100 : 0;
         const turnover   = price * units;
-        const profit     = (margin * units) - mkt;
+        const profit     = margin * units;
         const netMargin  = turnover > 0 ? (profit / turnover) * 100 : 0;
 
         const set = (id, text, cls) => {
@@ -493,7 +494,7 @@
           el.className = 'value' + (cls ? ' ' + cls : '');
         };
 
-        set('out-cogs',      fmt(materialsOnly + val('mkt-photography') + mkt));
+        set('out-cogs',      fmt(costPerUnit));
         set('out-margin',    fmt(margin),  margin >= 0 ? 'positive' : 'negative');
         document.getElementById('out-margin-pct').textContent = pct(marginPct) + ' of price';
         set('out-mkt',       fmt(price));
