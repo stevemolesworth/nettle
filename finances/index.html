@@ -246,6 +246,25 @@
 
       .field-group:first-child { margin-top: 0; }
 
+      /* ── Copy summary button ── */
+
+      #btn-copy {
+        font-family: 'Cormorant Garamond', Georgia, serif;
+        font-size: 0.78rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        padding: 0.45em 1.1em;
+        border-radius: 2px;
+        border: 1px solid var(--muted);
+        background: transparent;
+        color: var(--muted);
+        cursor: pointer;
+        transition: border-color 0.15s, color 0.15s;
+      }
+
+      #btn-copy:hover { border-color: var(--light); color: var(--light); }
+      #btn-copy.copied { border-color: #7ec99a; color: #7ec99a; }
+
       /* ── Divider line in results ── */
 
       .results-divider {
@@ -261,6 +280,7 @@
       <a href="../index.html"><img src="../assets/marque.svg" alt="Nettle marque" /></a>
       <h1>Finances</h1>
       <button id="btn-reset">Reset</button>
+      <button id="btn-copy">Copy summary</button>
       <a id="btn-download" download="nettle-finances.csv">Export CSV</a>
     </header>
 
@@ -512,6 +532,45 @@
       checkDirty();
 
       document.fonts.ready.then(() => document.body.classList.add('fonts-ready'));
+
+      // ── Copy summary as PNG ──
+      document.getElementById('btn-copy').addEventListener('click', async () => {
+        const btn = document.getElementById('btn-copy');
+        const target = document.querySelector('.results');
+
+        const canvas = await html2canvas(target, {
+          backgroundColor: '#262626',
+          scale: 2,
+          useCORS: true,
+        });
+
+        canvas.toBlob(async blob => {
+          let copied = false;
+          try {
+            await navigator.clipboard.write([
+              new ClipboardItem({ 'image/png': blob })
+            ]);
+            copied = true;
+          } catch (e) {
+            // Clipboard not available — fall back to download
+          }
+
+          if (copied) {
+            btn.textContent = 'Copied!';
+            btn.classList.add('copied');
+            setTimeout(() => {
+              btn.textContent = 'Copy summary';
+              btn.classList.remove('copied');
+            }, 2000);
+          } else {
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'nettle-summary.png';
+            a.click();
+          }
+        }, 'image/png');
+      });
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
   </body>
 </html>
