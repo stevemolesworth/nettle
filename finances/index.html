@@ -266,15 +266,11 @@
         <div style="margin-top: 1.5rem;">
           <h2 style="margin-bottom: 1.2rem;">Marketing spend — per month</h2>
           <div class="field">
-            <label>Photography</label>
-            <div class="input-wrap"><span>£</span><input type="number" id="mkt-photography" value="0" min="0" step="10" /></div>
+            <label>P&amp;P (per unit)</label>
+            <div class="input-wrap"><span>£</span><input type="number" id="mkt-photography" value="0" min="0" step="1" /></div>
           </div>
           <div class="field">
-            <label>Packaging design</label>
-            <div class="input-wrap"><span>£</span><input type="number" id="mkt-packaging" value="0" min="0" step="10" /></div>
-          </div>
-          <div class="field">
-            <label>Social / ads</label>
+            <label>Media spend (Social / ads)</label>
             <div class="input-wrap"><span>£</span><input type="number" id="mkt-ads" value="0" min="0" step="10" /></div>
           </div>
           <div class="field">
@@ -339,11 +335,12 @@
           val('cost-lining') +
           val('cost-boxwood') +
           val('cost-padding') +
-          val('cost-misc');
+          val('cost-misc') +
+          val('mkt-photography'); // P&P is per unit
 
         const price   = val('price');
         const units   = val('units');
-        const mkt     = val('mkt-photography') + val('mkt-packaging') + val('mkt-ads') + val('mkt-other');
+        const mkt     = val('mkt-ads') + val('mkt-other');
 
         const margin     = price - cogs;
         const marginPct  = price > 0 ? (margin / price) * 100 : 0;
