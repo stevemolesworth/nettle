@@ -407,7 +407,7 @@
           <span class="value" id="out-mkt">—</span>
         </div>
         <div class="stat">
-          <span class="label">Cost per sale</span>
+          <span class="label">Cost per unit</span>
           <span class="value" id="out-cogs">—</span>
         </div>
         <div class="stat">
@@ -493,7 +493,7 @@
           el.className = 'value' + (cls ? ' ' + cls : '');
         };
 
-        set('out-cogs',      fmt(cogs));
+        set('out-cogs',      fmt(materialsOnly + val('mkt-photography') + mkt));
         set('out-margin',    fmt(margin),  margin >= 0 ? 'positive' : 'negative');
         document.getElementById('out-margin-pct').textContent = pct(marginPct) + ' of price';
         set('out-mkt',       fmt(price));
